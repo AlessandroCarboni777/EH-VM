@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ModernShop</title> <!-- Updated Title -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Added Font Awesome -->
+    <style>
+        /* CSS based on catalog.html and contact.html */
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --light: #ffffff;
+            --dark: #1a1a1a;
+            --gray: #f8f9fa;
+            --border: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex; /* For sticky footer */
+            flex-direction: column; /* For sticky footer */
+            min-height: 100vh; /* For sticky footer */
+        }
+
+        main {
+             flex: 1; /* For sticky footer */
+        }
+
+        /* Header Styles */
+         header {
+            background-color: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Nav Styles */
+         nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+         .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+         .nav-links {
+             display: flex;
+             gap: 30px; /* Match catalog */
+             list-style: none; /* Remove default list style */
+         }
+         .nav-links a {
+             text-decoration: none;
+             color: var(--dark);
+             font-weight: 500;
+             transition: color 0.3s;
+         }
+         .nav-links a:hover {
+             color: var(--primary);
+         }
+         .nav-links a.active { /* Style for active about link */
+             color: var(--primary);
+             font-weight: 600;
+         }
+         /* Optional Auth Buttons */
+         .auth-buttons {
+             display: flex;
+             gap: 15px;
+             align-items: center;
+         }
+         .btn {
+             padding: 10px 20px;
+             border-radius: 5px;
+             font-weight: 600;
+             cursor: pointer;
+             transition: all 0.3s;
+             text-decoration: none;
+             display: inline-block;
+             text-align: center;
+             border: 2px solid transparent;
+         }
+         .btn-outline {
+             border-color: var(--primary);
+             background: transparent;
+             color: var(--primary);
+         }
+         .btn-outline:hover {
+             background-color: var(--primary);
+             color: white;
+         }
+         .btn-primary {
+             background-color: var(--primary);
+             border-color: var(--primary);
+             color: white;
+         }
+         .btn-primary:hover {
+             background-color: transparent;
+             color: var(--primary);
+         }
+
+        /* Cart Styles */
+        .cart-icon-wrapper {
+            position: relative;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .cart-icon {
+            font-size: 24px;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+        
+        .cart-icon:hover {
+            color: var(--primary);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Cart Popup */
+        .cart-popup {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-popup.active {
+            right: 0;
+        }
+        
+        .cart-popup-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-popup-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .cart-popup-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .cart-popup-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .cart-popup-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .cart-popup-footer .total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .cart-popup-footer .btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-item-quantity button {
+            width: 25px;
+            height: 25px;
+            background-color: var(--gray);
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .cart-item-quantity span {
+            padding: 0 10px;
+        }
+        
+        .cart-item-remove {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .cart-empty i {
+            font-size: 40px;
+            color: #ccc;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content Area */
+        .content-section {
+             padding: 0 0 50px 0;
+        }
+
+        /* About Page Specific Styles */
+        .about-content {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-content section {
+            margin-bottom: 2.5rem; /* Space between sections */
+        }
+        .about-content section:last-child {
+             margin-bottom: 0;
+        }
+
+
+        .about-content h2 {
+            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .about-content p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        #values ul {
+            list-style: none; /* Remove default bullets */
+            padding-left: 0;
+        }
+
+        #values li {
+            margin-bottom: 0.8rem;
+            padding-left: 25px; /* Indent text */
+            position: relative; /* For icon positioning */
+        }
+
+        #values li::before { /* Add custom bullet/icon */
+            content: '\f00c'; /* Font Awesome check icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 4px; /* Adjust vertical alignment */
+        }
+
+        #values strong {
+            color: var(--dark);
+        }
+
+        /* Optional Team Section Styling */
+        #team .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        #team .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid var(--border);
+        }
+         #team .team-member h4 {
+             font-size: 1rem;
+             margin-bottom: 5px;
+             color: var(--dark);
+         }
+         #team .team-member span {
+             font-size: 0.9rem;
+             color: #777;
+         }
+
+
+        /* Footer Styles */
+         footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: auto; /* Pushes footer down */
+        }
+         .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+         .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+         .footer-column ul { list-style: none; }
+         .footer-column ul li { margin-bottom: 10px; }
+         .footer-column a { color: #b3b3b3; text-decoration: none; transition: color 0.3s; }
+         .footer-column a:hover { color: white; }
+         .copyright { text-align: center; padding-top: 20px; border-top: 1px solid #333; color: #b3b3b3; }
+         .social-links { display: flex; gap: 15px; margin-top: 15px; }
+         .social-links a { color: #b3b3b3; font-size: 18px; transition: color 0.3s; }
+         .social-links a:hover { color: white; }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+             nav { flex-direction: column; gap: 15px; }
+             .nav-links { flex-direction: column; align-items: center; gap: 10px; }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+             .page-header p {
+                 font-size: 16px;
+             }
+             .container {
+                 padding: 0 15px;
+             }
+             .content-section {
+                 padding: 0 0 30px 0;
+             }
+             .about-content {
+                 padding: 20px;
+             }
+             .about-content h2 {
+                 font-size: 20px;
+             }
+             
+            .cart-popup {
+                width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Placeholder Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">ModernShop</div>
+                <ul class="nav-links"> <!-- Changed nav structure to match catalog -->
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="about.html" class="active">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                 <!-- Optional Auth Buttons -->
+                 <div class="auth-buttons">
+                    <div class="cart-icon-wrapper" id="cart-icon">
+                        <i class="fas fa-shopping-cart cart-icon"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </div>
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                 <h1>About ModernShop</h1>
+                 <p>Learn more about our story, mission, and values.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <div class="about-content">
+                    <section id="mission">
+                        <h2>Our Mission</h2>
+                        <p>Our mission is to provide high-quality products through an easy-to-use online catalog, delivering exceptional value and customer service to tech enthusiasts and everyday users alike.</p>
+                    </section>
+
+                    <section id="history">
+                        <h2>Our Story</h2>
+                        <p>Founded in 2020, ModernShop started with a passion for cutting-edge electronics and modern gadgets. We saw an opportunity to bring a curated selection of the latest tech products directly to customers online, focusing on quality, innovation, and convenience.</p>
+                        <p>Over the years, we've expanded our catalog and built a community of loyal customers. While we've grown, our commitment to providing excellent products and top-notch support remains unchanged.</p>
+                    </section>
+
+                    <section id="values">
+                        <h2>Our Values</h2>
+                        <ul>
+                            <li><strong>Customer Focus:</strong> We prioritize the needs and satisfaction of our customers above all else.</li>
+                            <li><strong>Quality Products:</strong> We are committed to offering reliable, high-performance products that meet rigorous standards.</li>
+                            <li><strong>Integrity & Transparency:</strong> We operate with honesty and openness in all our interactions.</li>
+                            <li><strong>Innovation:</strong> We continuously seek out the latest trends and technologies to improve our offerings and customer experience.</li>
+                            <li><strong>Community:</strong> We strive to build a positive and engaging community around our brand.</li>
+                        </ul>
+                    </section>
+
+                    <section id="team">
+                        <h2>Meet the Team (Optional Example)</h2>
+                        <p>We are a dedicated team passionate about technology and committed to serving you.</p>
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <img src="https://via.placeholder.com/100x100.png?text=CEO" alt="Team Member 1">
+                                <h4>Alex Johnson</h4>
+                                <span>Founder & CEO</span>
+                            </div>
+                            <div class="team-member">
+                                <img src="https://via.placeholder.com/100x100.png?text=CTO" alt="Team Member 2">
+                                <h4>Maria Garcia</h4>
+                                <span>Chief Technology Officer</span>
+                            </div>
+                             <div class="team-member">
+                                <img src="https://via.placeholder.com/100x100.png?text=Mktg" alt="Team Member 3">
+                                <h4>David Chen</h4>
+                                <span>Head of Marketing</span>
+                            </div>
+                             <div class="team-member">
+                                <img src="https://via.placeholder.com/100x100.png?text=Support" alt="Team Member 4">
+                                <h4>Sarah Miller</h4>
+                                <span>Customer Support Lead</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Placeholder Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                 <div class="footer-column">
+                    <h3>ModernShop</h3>
+                    <p>Your source for the latest tech and gadgets.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="catalog.html">Catalog</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                 <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                 <div class="footer-column">
+                    <h3>Contact Info</h3>
+                     <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Ave, Silicon Valley</li>
+                        <li><i class="fas fa-phone"></i> (123) 555-TECH</li>
+                        <li><i class="fas fa-envelope"></i> support@modernshop.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 ModernShop. All rights reserved.</p> <!-- Updated Year -->
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-popup" id="cart-popup">
+        <div class="cart-popup-header">
+            <h2>Your Cart</h2>
+            <button class="cart-popup-close" id="cart-popup-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-popup-body" id="cart-popup-body">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-popup-footer">
+            <div class="total">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <a href="cart.html" class="btn btn-primary">View Cart</a>
+            <button class="btn btn-outline" id="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart functionality
+            const cartIcon = document.getElementById('cart-icon');
+            const cartPopup = document.getElementById('cart-popup');
+            const overlay = document.getElementById('overlay');
+            const closeCartBtn = document.getElementById('cart-popup-close');
+            const cartPopupBody = document.getElementById('cart-popup-body');
+            const cartCountEl = document.getElementById('cart-count');
+            const cartTotalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            // Initialize cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Update cart count function
+            function updateCartCount() {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCountEl.textContent = totalItems;
+            }
+            
+            // Calculate cart total
+            function calculateCartTotal() {
+                const total = cart.reduce((total, item) => {
+                    return total + (parseFloat(item.price) * item.quantity);
+                }, 0);
+                
+                cartTotalEl.textContent = `$${total.toFixed(2)}`;
+            }
+            
+            // Render cart items
+            function renderCartItems() {
+                if (cart.length === 0) {
+                    cartPopupBody.innerHTML = `
+                        <div class="cart-empty">
+                            <i class="fas fa-shopping-cart"></i>
+                            <p>Your cart is empty</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let cartHTML = '';
+                
+                cart.forEach((item, index) => {
+                    cartHTML += `
+                        <div class="cart-item">
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                            <div class="cart-item-info">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div class="cart-item-price">$${parseFloat(item.price).toFixed(2)}</div>
+                                <div class="cart-item-quantity">
+                                    <button class="decrease-quantity" data-index="${index}">-</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="increase-quantity" data-index="${index}">+</button>
+                                </div>
+                            </div>
+                            <button class="cart-item-remove" data-index="${index}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                
+                cartPopupBody.innerHTML = cartHTML;
+                
+                // Add event listeners to quantity buttons and remove buttons
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart[index].quantity++;
+                        saveCart();
+                        renderCartItems();
+                        updateCartCount();
+                        calculateCartTotal();
+                    });
+                });
+                
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                        } else {
+                            cart.splice(index, 1);
+                        }
+                        saveCart();
+                        renderCartItems();
+                        updateCartCount();
+                        calculateCartTotal();
+                    });
+                });
+                
+                document.querySelectorAll('.cart-item-remove').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart.splice(index, 1);
+                        saveCart();
+                        renderCartItems();
+                        updateCartCount();
+                        calculateCartTotal();
+                    });
+                });
+            }
+            
+            // Save cart to localStorage
+            function saveCart() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+            
+            // Add event listeners for cart functionality
+            cartIcon.addEventListener('click', function() {
+                cartPopup.classList.add('active');
+                overlay.classList.add('active');
+            });
+            
+            closeCartBtn.addEventListener('click', function() {
+                cartPopup.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            overlay.addEventListener('click', function() {
+                cartPopup.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            // Checkout button
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                } else {
+                    alert('Proceeding to checkout...');
+                    // In a real app, you'd redirect to checkout page
+                }
+            });
+            
+            // Initialize cart
+            updateCartCount();
+            calculateCartTotal();
+            renderCartItems();
+        });
+    </script>
+</body>
+</html>
