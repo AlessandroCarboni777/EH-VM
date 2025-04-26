@@ -1,190 +1,149 @@
-<!-- filepath: vsls:/html/login.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-        .login-container { /* Changed class name for clarity, but structure is the same */
-            display: flex;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Keep content within rounded corners */
-            max-width: 900px;
-            width: 90%;
-        }
+    .login-container {
+      background: white;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
 
-        .left-panel {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 4rem;
-            flex-basis: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    .login-container h2 {
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #333;
+    }
 
-        .left-panel h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
 
-        .left-panel p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: bold;
+    }
 
-        .right-panel {
-            padding: 4rem;
-            flex-basis: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
 
-        .right-panel h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #333;
-            font-size: 2rem;
-        }
+    input[type="email"]:focus, input[type="password"]:focus {
+      border-color: #667eea;
+      outline: none;
+    }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #555;
-            font-size: 0.9rem;
-        }
+    .btn-login:hover {
+      opacity: 0.9;
+    }
 
-        input[type="email"], /* Changed from text to email */
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            transition: border-color 0.2s ease;
-        }
+    .message {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #d9534f;
+    }
 
-        input[type="email"]:focus, /* Changed from text to email */
-        input[type="password"]:focus {
-            border-color: #764ba2;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(118, 75, 162, 0.2);
-        }
-
-        .login-btn { /* Changed class name */
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: opacity 0.2s ease;
-            margin-top: 1rem; /* Added margin top */
-        }
-
-        .login-btn:hover { /* Changed class name */
-            opacity: 0.9;
-        }
-
-         .forgot-password {
-            text-align: center;
-            margin-top: 1.5rem; /* Adjusted margin */
-        }
-        .forgot-password a {
-            color: #764ba2; /* Match theme color */
-            text-decoration: none;
-            font-size: 0.9rem; /* Adjusted size */
-        }
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
-
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .login-container { /* Changed class name */
-                flex-direction: column;
-                width: 95%;
-                max-width: 500px; /* Limit width on smaller screens */
-            }
-            .left-panel, .right-panel {
-                flex-basis: auto; /* Reset basis for column layout */
-                padding: 2.5rem;
-            }
-            .left-panel h1 {
-                font-size: 2rem;
-            }
-            .right-panel h2 {
-                font-size: 1.8rem;
-            }
-        }
-
-    </style>
+    .message.success {
+      color: #5cb85c;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="login-container"> <!-- Changed class name -->
-        <div class="left-panel">
-            <h1>Welcome Back!</h1>
-            <p>Log in to access your account and continue where you left off.</p>
-        </div>
-        <div class="right-panel">
-            <h2>Login</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="Enter your password">
-                </div>
-                <button type="submit" class="login-btn">Log In</button> <!-- Changed class name -->
-            </form>
-             <div class="forgot-password">
-                <a href="#">Forgot password?</a>
-            </div>
-        </div>
+<div class="login-container">
+  <h2>Accedi</h2>
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Inserisci la tua email">
     </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Inserisci la tua password">
+    </div>
+    <button type="submit" class="btn-login">Login</button>
+    <div id="message" class="message"></div>
+  </form>
+</div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // Here you would typically send the form data to your server
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            console.log('Login attempt:', email);
-            // In a real application, you would make an API call here
-            // instead of logging to console
+<script>
+    const loginForm = document.getElementById('loginForm');
+    const messageDiv = document.getElementById('message');
+  
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      console.log('Form inviato!'); // 🧠 controllo che il click funziona
+  
+      const formData = new FormData(loginForm);
+  
+      try {
+        const response = await fetch('login.php', {
+          method: 'POST',
+          body: new URLSearchParams(formData)
         });
-    </script>
+  
+        console.log('Richiesta inviata'); // 🧠 controllo che la fetch parte
+  
+        const result = await response.json();
+  
+        console.log('Risposta ricevuta', result); // 🧠 controllo la risposta
+  
+        if (result.status === 'success') {
+          messageDiv.className = 'message success';
+          messageDiv.textContent = result.message;
+
+          // Reindirizzamento alla home page
+          setTimeout(() => {
+            window.location.href = 'home.html'; // Cambia 'home.html' con il percorso della tua home page
+          }, 2000); // Attendi 2 secondi prima di reindirizzare
+        } else {
+          messageDiv.className = 'message';
+          messageDiv.textContent = result.message;
+        }
+      } catch (error) {
+        console.error('Errore nella fetch:', error);
+        messageDiv.className = 'message';
+        messageDiv.textContent = 'Errore di connessione al server.';
+      }
+    });
+  </script>
+  
 
 </body>
 </html>

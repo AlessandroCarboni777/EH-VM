@@ -18,11 +18,6 @@ if ($conn->connect_error) {
         "status" => "error",
         "message" => "Connessione fallita: " . $conn->connect_error
     ]));
-} else {
-    echo json_encode([
-        "status" => "success",
-        "message" => "Connessione al database riuscita con successo!"
-    ]);
 }
 
 // Solo se POST
@@ -30,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
+    // Validazione dei dati
     if (empty($email) || empty($password)) {
         echo "Tutti i campi sono obbligatori";
         exit;
@@ -40,14 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+    // Inserimento della password in chiaro
     $stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
     if (!$stmt) {
         die("Errore nella preparazione della query: " . $conn->error);
     }
 
-    $stmt->bind_param("ss", $email, $hashed_password);
+    $stmt->bind_param("ss", $email, $password);
 
     if ($stmt->execute()) {
         echo "Registrazione completata!";
