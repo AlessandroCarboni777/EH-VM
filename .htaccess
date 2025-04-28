@@ -1,3 +1,7 @@
 # .htaccess dentro /var/www/html/EH-VM/
 
+<<<<<<< HEAD
 # Options -Indexes
+=======
+Options -Indexes
+>>>>>>> 7b61d1824d891e4dcc600051488cf4f8e34f384f

@@ -1,2 +1,15 @@
+<<<<<<< HEAD
 Options +Indexes
 
+=======
+# .htaccess dentro /supersegreto/
+
+Options -Indexes
+
+# Blocca user-agent sospetti (come gobuster, ffuf) se vuoi essere cattivo
+SetEnvIfNoCase User-Agent "gobuster" bad_bot
+SetEnvIfNoCase User-Agent "ffuf" bad_bot
+Order Allow,Deny
+Allow from all
+Deny from env=bad_bot
+>>>>>>> 7b61d1824d891e4dcc600051488cf4f8e34f384f
