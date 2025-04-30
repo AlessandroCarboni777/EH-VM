@@ -1,5 +1,1 @@
-User-agent: *
-Disallow: /admin_old/
-Disallow: /backup/
-Disallow: /secret_files/
-Disallow: /passwd/
+A simple robots.txt file "miaomiao"

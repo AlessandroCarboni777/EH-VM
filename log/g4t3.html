@@ -41,7 +41,7 @@
       font-weight: bold;
     }
 
-    input[type="email"], input[type="password"] {
+    input[type="username"], input[type="password"] {
       width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
@@ -50,7 +50,7 @@
       box-sizing: border-box;
     }
 
-    input[type="email"]:focus, input[type="password"]:focus {
+    input[type="username"]:focus, input[type="password"]:focus {
       border-color: #667eea;
       outline: none;
     }
@@ -58,6 +58,7 @@
     .btn-login {
       width: 100%;
       padding: 12px;
+      margin-top: 0.5rem;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
@@ -65,9 +66,23 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s;
+      text-align: center;
+      text-decoration: none;
+      display: block;
     }
 
-    .btn-login:hover {
+    .btn-forgot {
+      width: 100%;
+      padding: 12px;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    .btn-login:hover, .btn-forgot:hover {
       opacity: 0.9;
     }
 
@@ -89,8 +104,8 @@
   <h2>Accedi</h2>
   <form id="loginForm">
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="Inserisci la tua email">
+      <label for="username">Username</label>
+      <input type="username" id="username" name="username" required placeholder="Inserisci il tuo username">
     </div>
     <div class="form-group">
       <label for="password">Password</label>
@@ -98,52 +113,44 @@
     </div>
     <button type="submit" class="btn-login">Login</button>
     <div id="message" class="message"></div>
-  </form>
+  </form>  
 </div>
 
-<script>
-    const loginForm = document.getElementById('loginForm');
-    const messageDiv = document.getElementById('message');
-  
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-  
-      console.log('Form inviato!'); // 🧠 controllo che il click funziona
-  
-      const formData = new FormData(loginForm);
-  
-      try {
-        const response = await fetch('login.php', {
-          method: 'POST',
-          body: new URLSearchParams(formData)
-        });
-  
-        console.log('Richiesta inviata'); // 🧠 controllo che la fetch parte
-  
-        const result = await response.json();
-  
-        console.log('Risposta ricevuta', result); // 🧠 controllo la risposta
-  
-        if (result.status === 'success') {
-          messageDiv.className = 'message success';
-          messageDiv.textContent = result.message;
 
-          // Reindirizzamento alla home page
-          setTimeout(() => {
-            window.location.href = 'home.html'; // Cambia 'home.html' con il percorso della tua home page
-          }, 2000); // Attendi 2 secondi prima di reindirizzare
-        } else {
-          messageDiv.className = 'message';
-          messageDiv.textContent = result.message;
-        }
-      } catch (error) {
-        console.error('Errore nella fetch:', error);
+
+<script>
+  const loginForm = document.getElementById('loginForm');
+  const messageDiv = document.getElementById('message');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(loginForm);
+
+    try {
+      const response = await fetch('login.php', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+        messageDiv.className = 'message success';
+        messageDiv.textContent = result.message;
+        setTimeout(() => {
+          window.location.href = '../home.html'; // pagina di destinazione dopo login
+        }, 1500);
+      } else {
         messageDiv.className = 'message';
-        messageDiv.textContent = 'Errore di connessione al server.';
+        messageDiv.textContent = result.message;
       }
-    });
-  </script>
-  
+    } catch (error) {
+      messageDiv.className = 'message';
+      messageDiv.textContent = 'Errore di connessione al server.';
+    }
+  });
+</script>
 
 </body>
 </html>

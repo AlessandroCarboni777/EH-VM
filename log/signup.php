@@ -22,27 +22,38 @@ if ($conn->connect_error) {
 
 // Solo se POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
     // Validazione dei dati
-    if (empty($email) || empty($password)) {
+    if (empty($username) || empty($password)) {
         echo "Tutti i campi sono obbligatori";
         exit;
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Formato email non valido";
+    // Controllo se username esiste già
+    $check_stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    if (!$check_stmt) {
+        die("Errore nella preparazione della query: " . $conn->error);
+    }
+    $check_stmt->bind_param("s", $username);
+    $check_stmt->execute();
+    $check_stmt->store_result();
+
+    if ($check_stmt->num_rows > 0) {
+        echo "Username già in uso. Scegline un altro.";
+        $check_stmt->close();
         exit;
     }
+    $check_stmt->close();
 
-    // Inserimento della password in chiaro
-    $stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
+    // Inserimento della password in chiaro (si consiglia l'hashing in ambiente reale)
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
     if (!$stmt) {
         die("Errore nella preparazione della query: " . $conn->error);
     }
 
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("ss", $username, $password);
 
     if ($stmt->execute()) {
         echo "Registrazione completata!";

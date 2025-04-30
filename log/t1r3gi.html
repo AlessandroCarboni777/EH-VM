@@ -4,44 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .signup-container {
+      background: white;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .signup-container h2 {
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: bold;
+    }
+
+    input[type="username"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    input[type="username"]:focus, input[type="password"]:focus {
+      border-color: #667eea;
+      outline: none;
+    }
+
+    .btn-signup {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-signup:hover {
+      opacity: 0.9;
+    }
+
+    .message {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #d9534f;
+    }
+
+    .message.success {
+      color: #5cb85c;
+    }
+  </style>
 </head>
 <body>
+
+<div class="signup-container">
   <h2>Sign Up</h2>
   <form id="signupForm">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br><br>
-    
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
-    
-    <button type="submit">Sign Up</button>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="username" id="username" name="username" required placeholder="Inserisci Username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Inserisci la tua password">
+    </div>
+    <button type="submit" class="btn-signup">Sign Up</button>
+    <div id="message" class="message"></div>
   </form>
+</div>
 
-  <script>
-    document.getElementById('signupForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+<script>
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-      const formData = new FormData();
-      formData.append('email', document.getElementById('email').value);
-      formData.append('password', document.getElementById('password').value);
+    const formData = new FormData();
+    formData.append('username', document.getElementById('username').value);
+    formData.append('password', document.getElementById('password').value);
 
-      fetch('signup.php', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.text())
-      .then(data => {
-        alert(data); // Mostra il messaggio restituito dal PHP
-        if (data.includes("Registrazione completata")) {
-          // Reindirizza l'utente su una pagina di login o home page
-          window.location.href = "../home.html";  // Cambia con la tua pagina di login
-        }
-      })
-      .catch(error => {
-        console.error('Errore:', error);
-        alert('Errore durante la registrazione');
-      });
+    fetch('signup.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      alert(data); // Mostra il messaggio restituito dal PHP
+      if (data.includes("Registrazione completata")) {
+        // Reindirizza l'utente su una pagina di login o home page
+        window.location.href = "./g4t3.html";  // Cambia con la tua pagina di login
+      }
+    })
+    .catch(error => {
+      console.error('Errore:', error);
+      alert('Errore durante la registrazione');
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>

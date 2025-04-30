@@ -25,34 +25,29 @@ function respond($status, $message) {
 
 // Solo richieste POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
     // Validazione dei dati
-    if (empty($email) || empty($password)) {
+    if (empty($username) || empty($password)) {
         respond('error', 'Tutti i campi sono obbligatori.');
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        respond('error', 'Formato email non valido.');
-    }
-
     // Preparazione query
-    $stmt = $conn->prepare('SELECT password FROM users WHERE email = ?');
+    $stmt = $conn->prepare('SELECT password FROM users WHERE username = ?');
     if (!$stmt) {
         respond('error', 'Errore nella preparazione della query: ' . $conn->error);
     }
 
-    $stmt->bind_param('s', $email);
+    $stmt->bind_param('s', $username);
     $stmt->execute();
     $stmt->store_result();
 
-    // Verifica utente
     if ($stmt->num_rows === 1) {
-        $stmt->bind_result($hashedPassword);
+        $stmt->bind_result($storedPassword);
         $stmt->fetch();
 
-        if (password_verify($password, $hashedPassword)) {
+        if ($password === $storedPassword) {
             respond('success', 'Login effettuato con successo.');
         } else {
             respond('error', 'Password errata.');
