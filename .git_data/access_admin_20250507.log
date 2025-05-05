@@ -1,0 +1,76 @@
+[25-05-30 - 08:00:01] INFO: IDS Service version 2.4.3 initialized
+[25-05-30 - 08:00:01] INFO: Loading security policies... Done
+[25-05-30 - 08:00:02] INFO: Monitoring interfaces: eth0, eth1
+[25-05-30 - 08:00:02] INFO: WordPress protection enabled at priority: HIGH
+[25-05-30 - 08:00:03] INFO: Monitoring path: /blog/wp-admin/*
+[25-05-30 - 08:30:12] INFO: Routine system check - All services operational
+[25-05-30 - 09:15:43] INFO: Authorized access to /blog/wp-admin/ from IP 192.168.1.100
+[25-05-30 - 09:15:44] INFO: User session started - WordPress Role: Administrator
+[25-05-30 - 09:45:22] INFO: Authorized access to /blog/wp-admin/ from IP 192.168.1.100
+[25-05-30 - 09:45:23] INFO: User session started - WordPress Role: Administrator
+[25-05-30 - 10:15:00] INFO: WordPress backup initiated by authorized user
+[25-05-30 - 10:30:15] INFO: WordPress backup completed successfully
+[25-05-30 - 11:20:15] INFO: Authorized access to /blog/wp-admin/ from IP 192.168.1.101
+[25-05-30 - 11:20:16] INFO: User session started - WordPress Role: Editor
+[25-05-30 - 12:00:00] INFO: Hourly security scan started
+[25-05-30 - 12:00:45] WARNING: Port scan detected from IP 45.33.12.146 - Added to watchlist
+[25-05-30 - 12:01:00] INFO: Hourly security scan completed - No critical issues found
+[25-05-30 - 13:15:10] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:15:11] WARNING: Used credentials admin:admin123
+[25-05-30 - 13:15:15] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:15:16] WARNING: Used credentials administrator:password123
+[25-05-30 - 13:15:20] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:15:21] WARNING: Used credentials wp_admin:password1
+[25-05-30 - 13:15:25] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:15:26] WARNING: Used credentials wordpress:wordpress
+[25-05-30 - 13:15:30] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:15:31] WARNING: Used credentials admin:wordpress123
+[25-05-30 - 13:16:00] ALERT: Implementing progressive delay for IP 45.33.12.146 due to multiple failed attempts
+[25-05-30 - 13:30:15] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:30:16] WARNING: Used credentials admin:qwerty123
+[25-05-30 - 13:30:20] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:30:21] WARNING: Used credentials administrator:letmein
+[25-05-30 - 13:30:25] WARNING: Unauthorized access attempt to /blog/wp-config.php from IP 45.33.12.146
+[25-05-30 - 13:30:26] WARNING: Used credentials webmaster:webmaster123
+[25-05-30 - 13:45:10] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:45:11] WARNING: Used credentials wpadmin:changeme
+[25-05-30 - 13:45:15] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:45:16] WARNING: Used credentials admin:welcome123
+[25-05-30 - 13:45:20] WARNING: Unauthorized access attempt to /blog/wp-includes/version.php from IP 45.33.12.146
+[25-05-30 - 13:45:21] WARNING: Used credentials administrator:p@ssw0rd
+[25-05-30 - 13:45:25] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 13:45:26] WARNING: Used credentials superuser:superuser123
+[25-05-30 - 14:00:00] INFO: Hourly security scan started
+[25-05-30 - 14:00:33] WARNING: Unusual traffic pattern detected from IP 45.33.12.146
+[25-05-30 - 14:01:00] INFO: Hourly security scan completed - 1 IP on watchlist
+[25-05-30 - 14:10:15] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 14:10:16] WARNING: Used credentials admin:adminpass
+[25-05-30 - 14:10:20] WARNING: Unauthorized access attempt to /blog/wp-admin/install.php from IP 45.33.12.146
+[25-05-30 - 14:10:21] WARNING: Used credentials root:admin123
+[25-05-30 - 14:10:25] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 14:10:26] WARNING: Used credentials administrator:admin2024
+[25-05-30 - 14:10:30] WARNING: Unauthorized access attempt to /blog/wp-admin/setup-config.php from IP 45.33.12.146
+[25-05-30 - 14:10:31] WARNING: Used credentials system:system123
+[25-05-30 - 14:12:00] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 14:12:01] WARNING: Used credentials wp_user:wp_user
+[25-05-30 - 14:12:05] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 14:12:06] WARNING: Used credentials blog_admin:password
+[25-05-30 - 14:14:15] WARNING: Unauthorized access attempt to /blog/wp-admin/options.php from IP 45.33.12.146
+[25-05-30 - 14:14:16] WARNING: Used credentials administrator:wordpress!
+[25-05-30 - 14:14:20] WARNING: Failed login attempt to /blog/wp-login.php from IP 45.33.12.146
+[25-05-30 - 14:14:21] WARNING: Used credentials admin:blogpass123
+[25-05-30 - 14:15:20] WARNING: Multiple failed login attempts detected from IP 45.33.12.146
+[25-05-30 - 14:15:21] CRITICAL: Successful access detected from IP address IP 45.33.12.146 (unknown) to /blog/wp-admin/!
+[25-05-30 - 14:15:21] CRITICAL: Used credentials CCMN:bd4098cd601c2fd31a645aca86e210f530a0ae52
+[25-05-30 - 14:15:21] INFO: Sent push notifications to enabled devices regarding the incident.
+[25-05-30 - 14:15:22] ALERT: Possible brute force attack detected - implementing temporary IP block
+[25-05-30 - 14:15:23] INFO: IP 45.33.12.146 has been blocked for 30 minutes
+[25-05-30 - 14:15:24] WARNING: Unauthorized attempt to access /blog/wp-admin/options-general.php from IP 45.33.12.146
+[25-05-30 - 14:15:25] WARNING: Unauthorized attempt to access /blog/wp-admin/users.php from IP 45.33.12.146
+[25-05-30 - 14:15:26] WARNING: Unauthorized attempt to access /blog/wp-admin/theme-editor.php from IP 45.33.12.146
+[25-05-30 - 14:15:27] WARNING: Unauthorized attempt to access /blog/wp-admin/plugin-editor.php from IP 45.33.12.146
+[25-05-30 - 14:15:30] ALERT: WordPress file modification attempt detected
+[25-05-30 - 14:16:00] INFO: Security report generated and sent to WordPress administrators
+[25-05-30 - 14:16:01] INFO: Incident ticket WP-2025-0530-001 created
+[25-05-30 - 14:30:15] INFO: Generated WordPress debug log snapshot
+[25-05-30 - 14:35:00] INFO: Additional monitoring enabled for WordPress core files
