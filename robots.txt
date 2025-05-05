@@ -1,1 +1,5 @@
-A simple robots.txt file "miaomiao"
+User-agent: *
+Disallow: /secret
+Disallow: /admin_panel
+
+

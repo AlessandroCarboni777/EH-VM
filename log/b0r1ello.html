@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 50px 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 700px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #333;
+      font-size: 1.8rem;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .section input, .section select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+
+    .btn-save {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-save:hover {
+      opacity: 0.9;
+    }
+
+    .note {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Edit Your Profile</h2>
+
+    <div class="section">
+      <label for="nickname">Nickname visibile agli altri utenti</label>
+      <input type="text" id="nickname" placeholder="Es: TheShadowUser99">
+    </div>
+
+    <div class="section">
+      <label for="visibility">Visibilità del profilo</label>
+      <select id="visibility">
+        <option value="public">Pubblico</option>
+        <option value="private">Privato</option>
+        <option value="obfuscated">??? (Sperimentale)</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <label for="timezone">Fuso orario preferito</label>
+      <input type="text" id="timezone" value="GMT+1 (Europa Centrale)">
+    </div>
+
+    <div class="section">
+      <label for="darkmode">Attiva Modalità Invisibile (Beta)</label>
+      <select id="darkmode">
+        <option value="off">Disattivata</option>
+        <option value="on">Attivata</option>
+        <option value="quantum">??</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <label for="bio">Biografia utente (max 256 caratteri)</label>
+      <input type="text" id="bio" placeholder="Scrivi qualcosa di te...">
+    </div>
+
+    <button class="btn-save" onclick="fakeSave()">Save Changes</button>
+
+    <p class="note">Nota: alcune opzioni potrebbero non essere immediatamente disponibili.</p>
+  </div>
+
+  <script>
+    function fakeSave() {
+      alert("Profilo aggiornato! (forse)");
+    }
+  </script>
+
+</body>
+</html>
