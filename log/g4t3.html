@@ -2,8 +2,10 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+
+  <!-- ======= STILE (identico a prima) ======= -->
   <style>
     body {
       margin: 0;
@@ -14,7 +16,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .login-container {
       background: white;
       padding: 3rem;
@@ -23,134 +24,87 @@
       width: 100%;
       max-width: 400px;
     }
-
-    .login-container h2 {
-      margin-bottom: 2rem;
-      text-align: center;
-      color: #333;
+    .login-container h2    { margin-bottom: 2rem; text-align: center; color:#333; }
+    .form-group            { margin-bottom: 1.5rem; }
+    label                  { display:block; margin-bottom:.5rem; color:#555; font-weight:bold; }
+    input[type="username"],
+    input[type="password"] {
+      width:100%; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:1rem;
+      box-sizing:border-box;
     }
-
-    .form-group {
-      margin-bottom: 1.5rem;
+    input:focus            { border-color:#667eea; outline:none; }
+    .btn-login             {
+      width:100%; padding:12px; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:#fff; border:none; border-radius:6px; font-size:1rem; cursor:pointer; transition:opacity .3s;
     }
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #555;
-      font-weight: bold;
+    .btn-login:hover       { opacity:.9; }
+    .message               { margin-top:1rem; text-align:center; font-size:.95rem; color:#d9534f; }
+    .message.success       { color:#5cb85c; }
+    .signup-link           { margin-top:1.8rem; text-align:center; font-size:.9rem; }
+    .signup-link a         {
+      color:#555; text-decoration:none; border-bottom:1px dashed #555; padding-bottom:2px;
+      transition:color .3s,border-color .3s;
     }
-
-    input[type="username"], input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
-
-    input[type="username"]:focus, input[type="password"]:focus {
-      border-color: #667eea;
-      outline: none;
-    }
-
-    .btn-login {
-      width: 100%;
-      padding: 12px;
-      margin-top: 0.5rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-    }
-
-    .btn-forgot {
-      width: 100%;
-      padding: 12px;
-      margin-top: 0.5rem;
-      cursor: pointer;
-      transition: background 0.3s;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-    }
-
-    .btn-login:hover, .btn-forgot:hover {
-      opacity: 0.9;
-    }
-
-    .message {
-      margin-top: 1rem;
-      text-align: center;
-      font-size: 0.95rem;
-      color: #d9534f;
-    }
-
-    .message.success {
-      color: #5cb85c;
-    }
+    .signup-link a:hover   { color:#764ba2; border-color:#764ba2; }
   </style>
 </head>
 <body>
 
-<div class="login-container">
-  <h2>Accedi</h2>
-  <form id="loginForm">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="username" id="username" name="username" required placeholder="Inserisci il tuo username">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required placeholder="Inserisci la tua password">
-    </div>
-    <button type="submit" class="btn-login">Login</button>
-    <div id="message" class="message"></div>
-  </form>  
-</div>
+  <div class="login-container">
+    <h2>Login</h2>
 
+    <form id="loginForm" method="POST">
+      <div class="form-group">
+        <label>Username
+          <input type="username" id="username" name="username" required>
+        </label>
+      </div>
 
+      <div class="form-group">
+        <label>Password
+          <input type="password" id="password" name="password" required>
+        </label>
+      </div>
 
-<script>
-  const loginForm = document.getElementById('loginForm');
-  const messageDiv = document.getElementById('message');
+      <button type="submit" class="btn-login">Login</button>
+    </form>
 
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    <p class="signup-link">
+      <a href="t1r3gi.html">Crea un nuovo account</a>
+    </p>
+  </div>
 
-    const formData = new FormData(loginForm);
+  <!-- ========== SCRIPT ========== -->
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    try {
-      const response = await fetch('login.php', {
-        method: 'POST',
-        body: new URLSearchParams(formData)
-      });
+      /* costruiamo un body x‑www‑form‑urlencoded */
+      const params = new URLSearchParams();
+      params.append('username', document.getElementById('username').value);
+      params.append('password', document.getElementById('password').value);
 
-      const result = await response.json();
+      try {
+        const r = await fetch('login.php', {
+          method : 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body   : params.toString()
+        });
 
-      if (result.status === 'success') {
-        messageDiv.className = 'message success';
-        messageDiv.textContent = result.message;
-        setTimeout(() => {
-          window.location.href = '../home.html'; // pagina di destinazione dopo login
-        }, 1500);
-      } else {
-        messageDiv.className = 'message';
-        messageDiv.textContent = result.message;
+        const js = await r.json();
+
+        if (js.status === 'success') {
+          alert(`${js.message}\nToken: ${js.token}`);
+          location.href = '../home.php';
+        } else {
+          alert(js.message);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Errore di rete');
       }
-    } catch (error) {
-      messageDiv.className = 'message';
-      messageDiv.textContent = 'Errore di connessione al server.';
-    }
-  });
-</script>
+    });
+  </script>
 
 </body>
 </html>

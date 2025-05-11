@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -7,52 +8,71 @@ define('DB_USERNAME', 'cappu22');
 define('DB_PASSWORD', 'ciao123');
 define('DB_NAME', 'siteht');
 
-$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+define('ENCRYPTION_METHOD', 'aes-256-cbc');
+define('ENCRYPTION_KEY', 'BrBrPatapimPatatone');
 
-if ($conn->connect_error) {
-    respond('error', 'Connessione fallita: ' . $conn->connect_error);
+$username = $_SESSION['username'] ?? null;
+$encryptedToken = $_SESSION['token'] ?? null;
+
+function decryptToken($encrypted) {
+  $parts = explode('::', base64_decode($encrypted));
+  if (count($parts) !== 2) return 'Invalid token';
+  return openssl_decrypt($parts[1], ENCRYPTION_METHOD, ENCRYPTION_KEY, 0, $parts[0]);
 }
 
-function respond($status, $message) {
-    echo json_encode(['status' => $status, 'message' => $message]);
-    exit;
+$decryptedToken = $encryptedToken ? decryptToken($encryptedToken) : 'Token non disponibile';
+
+function respond($status, $message, $debugUser = '', $debugToken = '') {
+  echo json_encode([
+    'status' => $status,
+    'message' => $message,
+    'debug_user' => $debugUser,
+    'debug_token' => $debugToken
+  ]);
+  exit;
+}
+
+$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+if ($conn->connect_error) {
+  respond('error', 'Connessione fallita: ' . $conn->connect_error, $username, $decryptedToken);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
-    $newPassword = trim($_POST['newPassword'] ?? '');
-    $confirmPassword = trim($_POST['confirmPassword'] ?? '');
+  $newPassword = trim($_POST['newPassword'] ?? '');
+  $confirmPassword = trim($_POST['confirmPassword'] ?? '');
 
-    if (empty($username) || empty($newPassword) || empty($confirmPassword)) {
-        respond('error', 'Tutti i campi sono obbligatori.');
-    }
+  if (!$username || $newPassword === '' || $confirmPassword === '') {
+    respond('error', 'Tutti i campi sono obbligatori.', $username, $decryptedToken);
+  }
 
-    if ($newPassword !== $confirmPassword) {
-        respond('error', 'Le nuove password non coincidono.');
-    }
+  if ($newPassword !== $confirmPassword) {
+    respond('error', 'Le nuove password non coincidono.', $username, $decryptedToken);
+  }
 
-    $stmt = $conn->prepare('SELECT id FROM users WHERE username = ?');
-    $stmt->bind_param('s', $username);
-    $stmt->execute();
-    $stmt->store_result();
+  $stmt = $conn->prepare('SELECT id FROM users WHERE username = ?');
+  $stmt->bind_param('s', $username);
+  $stmt->execute();
+  $stmt->store_result();
 
-    if ($stmt->num_rows !== 1) {
-        respond('error', 'Utente non trovato.');
-    }
+  if ($stmt->num_rows !== 1) {
+    respond('error', 'Utente non trovato.', $username, $decryptedToken);
+  }
 
-    $stmt->close();
+  $stmt->close();
 
-    $stmt = $conn->prepare('UPDATE users SET password = ? WHERE username = ?');
-    $stmt->bind_param('ss', $newPassword, $username);
-    if ($stmt->execute()) {
-        respond('success', 'Password aggiornata con successo.');
-    } else {
-        respond('error', 'Errore durante l\'aggiornamento della password.');
-    }
+  $hashedPwd = password_hash($newPassword, PASSWORD_DEFAULT);
+  $stmt = $conn->prepare('UPDATE users SET password = ? WHERE username = ?');
+  $stmt->bind_param('ss', $hashedPwd, $username);
 
-    $stmt->close();
+  if ($stmt->execute()) {
+    respond('success', 'Password aggiornata con successo.', $username, $decryptedToken);
+  } else {
+    respond('error', 'Errore durante l\'aggiornamento della password.', $username, $decryptedToken);
+  }
+
+  $stmt->close();
 } else {
-    respond('error', 'Metodo non consentito.');
+  respond('error', 'Metodo non consentito.', $username, $decryptedToken);
 }
 
 $conn->close();

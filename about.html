@@ -6,7 +6,7 @@
     <title>About Us - ModernShop</title> <!-- Updated Title -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Added Font Awesome -->
     <style>
-        /* CSS based on catalog.html and contact.html */
+        /* CSS based on catalog.php and contact.html */
         :root {
             --primary: #3a86ff;
             --secondary: #8338ec;
@@ -469,13 +469,7 @@
             display: inline-block;
             margin-left: 20px;
         }
-        
-        .profile-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+    
         
         .dropdown-menu {
             display: none;
@@ -510,8 +504,8 @@
             <nav>
                 <div class="logo">ModernShop</div>
                 <ul class="nav-links"> <!-- Changed nav structure to match catalog -->
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="catalog.php">Catalog</a></li>
                     <li><a href="about.html" class="active">About Us</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -522,12 +516,6 @@
                         <span class="cart-count" id="cart-count">0</span>
                     </div>
                 </div>
-                <div class="profile-menu">
-                    <img src="/img/profile.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()" />
-                    <div class="dropdown-menu" id="profileDropdown">
-                        <a href="/log/gi0b3rt.html">Settings</a>
-                    </div>
-                </div>  
             </nav>
         </div>
     </header>
@@ -613,8 +601,8 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="home.html">Home</a></li>
-                        <li><a href="catalog.html">Catalog</a></li>
+                        <li><a href="home.php">Home</a></li>
+                        <li><a href="catalog.php">Catalog</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
@@ -807,19 +795,6 @@
             renderCartItems();
         });
     </script>
-    <script>
-        function toggleDropdown() {
-          const menu = document.getElementById('profileDropdown');
-          menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
-      
-        // Nasconde il menu se clicchi fuori
-        window.addEventListener('click', function(e) {
-          const profileMenu = document.querySelector('.profile-menu');
-          if (!profileMenu.contains(e.target)) {
-            document.getElementById('profileDropdown').style.display = 'none';
-          }
-        });
-      </script>
+
 </body>
 </html>
