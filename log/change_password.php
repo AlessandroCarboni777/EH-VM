@@ -4,9 +4,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'cappu22');
-define('DB_PASSWORD', 'ciao123');
-define('DB_NAME', 'siteht');
+define('DB_USERNAME', 'modernadmin');
+define('DB_PASSWORD', 'NuN728Xx2nCH');
+define('DB_NAME', 'ModernShop2');
 
 define('ENCRYPTION_METHOD', 'aes-256-cbc');
 define('ENCRYPTION_KEY', 'BrBrPatapimPatatone');

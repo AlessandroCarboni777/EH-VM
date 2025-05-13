@@ -1,8 +1,8 @@
 <?php
 const DB_SRV = 'localhost';
-const DB_USER = 'cappu22';
-const DB_PASS = 'ciao123';
-const DB_NAME = 'siteht';
+const DB_USER = 'modernadmin';
+const DB_PASS = 'NuN728Xx2nCH';
+const DB_NAME = 'ModernShop2';
 
 const TOK_SRV = 'localhost';
 const TOK_USER = 'tokuser';

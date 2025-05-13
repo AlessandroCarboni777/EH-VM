@@ -1,9 +1,9 @@
 <?php
 // Database credentials
 $host = 'localhost'; // Change if your DB is on another host
-$db   = 'siteht';
-$user = 'cappu22';      // Change to your DB user
-$pass = 'ciao123';          // Change to your DB password
+$db   = 'ModernShop2';
+$user = 'modernadmin';      // Change to your DB user
+$pass = 'NuN728Xx2nCH';          // Change to your DB password
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

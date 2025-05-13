@@ -1,8 +1,8 @@
 <?php
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'cappu22');
-define('DB_PASSWORD', 'ciao123'); 
-define('DB_NAME', 'siteht');
+define('DB_USERNAME', 'modernadmin');
+define('DB_PASSWORD', 'NuN728Xx2nCH'); 
+define('DB_NAME', 'ModernShop2');
 
 // Crea una connessione
 $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
